@@ -1,51 +1,20 @@
-// ==============================
+// ===============================
 // Smooth Scroll
-// ==============================
+// ===============================
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('nav a').forEach(link => {
 
-    anchor.addEventListener("click", function (e) {
+    link.addEventListener('click', function(e){
 
         e.preventDefault();
 
-        document.querySelector(this.getAttribute("href")).scrollIntoView({
-            behavior: "smooth"
-        });
+        const target = document.querySelector(this.getAttribute('href'));
 
-    });
+        if(target){
 
-});
-
-// ==============================
-// Navbar Shadow
-// ==============================
-
-const header = document.querySelector("header");
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 50) {
-        header.style.boxShadow = "0 8px 20px rgba(0,0,0,.15)";
-    } else {
-        header.style.boxShadow = "0 3px 15px rgba(0,0,0,.08)";
-    }
-
-});
-
-// ==============================
-// Fade In Animation
-// ==============================
-
-const cards = document.querySelectorAll(".card");
-
-const observer = new IntersectionObserver((entries) => {
-
-    entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
+            target.scrollIntoView({
+                behavior:"smooth"
+            });
 
         }
 
@@ -53,25 +22,49 @@ const observer = new IntersectionObserver((entries) => {
 
 });
 
-cards.forEach(card => {
+// ===============================
+// Navbar berubah saat scroll
+// ===============================
 
-    card.style.opacity = "0";
-    card.style.transform = "translateY(40px)";
-    card.style.transition = ".6s";
+window.addEventListener("scroll",()=>{
 
-    observer.observe(card);
+    const header=document.querySelector("header");
 
-})
-// ============================
-// Mobile Menu
-// ============================
+    if(window.scrollY>80){
 
-const menuToggle = document.querySelector(".menu-toggle");
+        header.style.background="#ffffff";
+        header.style.boxShadow="0 10px 30px rgba(0,0,0,.1)";
 
-const nav = document.querySelector("nav");
+    }else{
 
-menuToggle.addEventListener("click",()=>{
+        header.style.boxShadow="0 5px 20px rgba(0,0,0,.08)";
 
-nav.classList.toggle("active");
+    }
+
+});
+
+// ===============================
+// Animasi muncul saat scroll
+// ===============================
+
+const observer=new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+});
+
+document.querySelectorAll(".card,.reseller-box,.testi").forEach(el=>{
+
+    el.classList.add("hidden");
+
+    observer.observe(el);
 
 });
