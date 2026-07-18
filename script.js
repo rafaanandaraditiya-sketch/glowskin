@@ -2,18 +2,18 @@
 // Smooth Scroll
 // ===============================
 
-document.querySelectorAll('nav a').forEach(anchor => {
+document.querySelectorAll('nav a').forEach(link => {
 
-    anchor.addEventListener('click', function(e){
+    link.addEventListener('click', function(e){
 
         e.preventDefault();
 
-        const tujuan = document.querySelector(this.getAttribute('href'));
+        const target = document.querySelector(this.getAttribute('href'));
 
-        if(tujuan){
+        if(target){
 
-            tujuan.scrollIntoView({
-                behavior:'smooth'
+            target.scrollIntoView({
+                behavior:"smooth"
             });
 
         }
@@ -23,32 +23,48 @@ document.querySelectorAll('nav a').forEach(anchor => {
 });
 
 // ===============================
-// Tombol Beli
+// Navbar berubah saat scroll
 // ===============================
 
-const tombol = document.querySelectorAll(".card button");
+window.addEventListener("scroll",()=>{
 
-tombol.forEach(btn=>{
+    const header=document.querySelector("header");
 
-    btn.addEventListener("click",()=>{
+    if(window.scrollY>80){
 
-        window.open(
-            "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20membeli%20produk%20GlowSkin",
-            "_blank"
-        );
+        header.style.background="#ffffff";
+        header.style.boxShadow="0 10px 30px rgba(0,0,0,.1)";
+
+    }else{
+
+        header.style.boxShadow="0 5px 20px rgba(0,0,0,.08)";
+
+    }
+
+});
+
+// ===============================
+// Animasi muncul saat scroll
+// ===============================
+
+const observer=new IntersectionObserver((entries)=>{
+
+    entries.forEach(entry=>{
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+        }
 
     });
 
 });
-// ============================
-// Menu Hamburger
-// ============================
 
-const menu = document.getElementById("menu-toggle");
-const navMenu = document.querySelector("nav ul");
+document.querySelectorAll(".card,.reseller-box,.testi").forEach(el=>{
 
-menu.addEventListener("click",()=>{
+    el.classList.add("hidden");
 
-    navMenu.classList.toggle("active");
+    observer.observe(el);
 
 });
