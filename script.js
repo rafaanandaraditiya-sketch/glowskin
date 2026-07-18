@@ -1,59 +1,51 @@
-// ===============================
+// ==============================
 // Smooth Scroll
-// ===============================
+// ==============================
 
-document.querySelectorAll('nav a').forEach(link => {
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-    link.addEventListener('click', function(e){
+    anchor.addEventListener("click", function (e) {
 
         e.preventDefault();
 
-        const target = document.querySelector(this.getAttribute('href'));
-
-        if(target){
-
-            target.scrollIntoView({
-                behavior:"smooth"
-            });
-
-        }
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth"
+        });
 
     });
 
 });
 
-// ===============================
-// Navbar berubah saat scroll
-// ===============================
+// ==============================
+// Navbar Shadow
+// ==============================
 
-window.addEventListener("scroll",()=>{
+const header = document.querySelector("header");
 
-    const header=document.querySelector("header");
+window.addEventListener("scroll", () => {
 
-    if(window.scrollY>80){
-
-        header.style.background="#ffffff";
-        header.style.boxShadow="0 10px 30px rgba(0,0,0,.1)";
-
-    }else{
-
-        header.style.boxShadow="0 5px 20px rgba(0,0,0,.08)";
-
+    if (window.scrollY > 50) {
+        header.style.boxShadow = "0 8px 20px rgba(0,0,0,.15)";
+    } else {
+        header.style.boxShadow = "0 3px 15px rgba(0,0,0,.08)";
     }
 
 });
 
-// ===============================
-// Animasi muncul saat scroll
-// ===============================
+// ==============================
+// Fade In Animation
+// ==============================
 
-const observer=new IntersectionObserver((entries)=>{
+const cards = document.querySelectorAll(".card");
 
-    entries.forEach(entry=>{
+const observer = new IntersectionObserver((entries) => {
 
-        if(entry.isIntersecting){
+    entries.forEach(entry => {
 
-            entry.target.classList.add("show");
+        if (entry.isIntersecting) {
+
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
 
         }
 
@@ -61,10 +53,25 @@ const observer=new IntersectionObserver((entries)=>{
 
 });
 
-document.querySelectorAll(".card,.reseller-box,.testi").forEach(el=>{
+cards.forEach(card => {
 
-    el.classList.add("hidden");
+    card.style.opacity = "0";
+    card.style.transform = "translateY(40px)";
+    card.style.transition = ".6s";
 
-    observer.observe(el);
+    observer.observe(card);
+
+})
+// ============================
+// Mobile Menu
+// ============================
+
+const menuToggle = document.querySelector(".menu-toggle");
+
+const nav = document.querySelector("nav");
+
+menuToggle.addEventListener("click",()=>{
+
+nav.classList.toggle("active");
 
 });
